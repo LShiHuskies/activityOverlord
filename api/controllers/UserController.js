@@ -26,16 +26,23 @@ module.exports = {
 //     },
 //   },
   'new': function(req, res) {
+    res.locals.flash = _.clone(req.session.flash);
     res.view();
+    // req.session.flash = {};
   },
-  create: function (req, res, next) {
-      User.create( req.body, function userCreated (err, user) {
-          if (err) return next(err);
-          
-          res.json(user);
-      });
-  }
+  'create': function (req, res, next) {
+       User.create( req.allParams(), function (err, user) {
+        if (err) {
+            req.session.flash = {
+            err: err
+          }
+          return res.redirect('/user/new')
+        }
+        return res.redirect('/user/' + user.id);
+       }, { fetch: true })
 
+      
+  }
 
 };
 
