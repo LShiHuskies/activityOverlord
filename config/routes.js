@@ -21,6 +21,7 @@ module.exports.routes = {
 
   '/': { view: 'static/index' },
   'get /user/show/:id':'UserController.show',
+  'get /user/edit/:id':'UserController.edit',
 
 
   /***************************************************************************

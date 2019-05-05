@@ -65,6 +65,30 @@ module.exports = {
           users: users
       });
     }); 
+  },
+
+  edit: function (req, res, next) {
+
+    // Find the user from the id passed in via params
+    User.findOne(req.params, function foundUser (err, user) {
+        if (err) return next(err);
+        if (!user) return next();
+
+        res.view({
+            user: user
+        });
+    }, { fetch: true });
+  },
+  // Process the info from edit view
+  update: function (req, res, next) {
+      User.update(req.params, req.allParams(), function userUpdated (err) {
+          if (err) {
+              return res.redirect('/user/edit/' + req.params['id']);
+          }
+          
+          res.redirect('/user/show/' + req.params['id']);
+      }, { fetch: true });
   }
+
 };
 
