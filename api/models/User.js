@@ -38,9 +38,20 @@ module.exports = {
       unique: true
     },
   },
-  // customToJSON: function() {
-  //   return _.omit(this, ['password', 'confirmation', 'encryptedPassword', '_csrf'])
-  // }
+  customToJSON: function() {
+    return _.omit(this, ['password', 'confirmation', 'encryptedPassword', '_csrf'])
+  },
+
+  beforeCreate: function (values, next) {
+    if (!values.password || values.password !== values.confirmation) {
+      return next(({ err: ["Password doesnt match password confirmation"]}));
+    }
+    require('bcrypt').hash(values.password, 10, function passwordEncypted(err, encryptedPassword) {
+      if (err) return next(err);
+      values.encryptedPassword = encryptedPassword;
+      next();
+    });
+  }
 
 };
 

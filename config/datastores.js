@@ -50,6 +50,21 @@ module.exports.datastores = {
     ***************************************************************************/
     // adapter: 'sails-mysql',
     // url: 'mysql://user:password@host:port/database',
+    // adapter: 'sails-mongo',
+    // url: 'mongodb://user:password@host:port/database',
+    // ssl: true,
+    adapters: {
+      'default': 'mongo',
+      mongo: {
+        module : 'sails-mongo',
+        host   : 'localhost',
+        user   : 'louis',
+        password : 'louis',
+        database: 'activityoverlord',
+  
+        schema : true
+      }
+    }
 
   },
 
