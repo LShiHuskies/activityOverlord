@@ -7,6 +7,8 @@
 
 module.exports = {
 
+  schema: true,
+
   attributes: {
 
     //  ╔═╗╦═╗╦╔╦╗╦╔╦╗╦╦  ╦╔═╗╔═╗
@@ -31,14 +33,14 @@ module.exports = {
     },
     email: {
       type: 'string',
-      email: true,
+      isEmail: true,
       required: true,
       unique: true
     },
-    encryptedPassword: {
-      type: 'string'
-    }
   },
+  // customToJSON: function() {
+  //   return _.omit(this, ['password', 'confirmation', 'encryptedPassword', '_csrf'])
+  // }
 
 };
 
