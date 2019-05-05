@@ -26,11 +26,11 @@ module.exports = {
 //     },
 //   },
   'new': function(req, res) {
-    res.locals.flash = _.clone(req.session.flash);
+    // res.locals.flash = _.clone(req.session.flash);
     res.view();
     // req.session.flash = {};
   },
-  'create': function (req, res, next) {
+  create: function (req, res, next) {
        User.create( req.allParams(), function (err, user) {
         if (err) {
             req.session.flash = {
@@ -38,11 +38,33 @@ module.exports = {
           }
           return res.redirect('/user/new')
         }
-        return res.redirect('/user/' + user.id);
+        return res.redirect('/user/show/' + user.id);
        }, { fetch: true })
 
       
-  }
+  },
 
+  // render the profile view
+  show: function (req, res, next) {
+    User.findOne(req.params, function foundUser(err, user) {
+      if (err) { 
+          return;
+      }
+      if (!user) return;
+      res.view({
+          user: user
+      });
+    }, { fetch: true });
+  },
+
+  index: function (req, res, next) {
+    // Get an array of all users in the User collection (e.g table)
+    User.find(function foundUsers (err, users) {
+      if (err) return next(err);
+      res.view({
+          users: users
+      });
+    }); 
+  }
 };
 
