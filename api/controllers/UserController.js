@@ -47,7 +47,8 @@ module.exports = {
   // render the profile view
   show: function (req, res, next) {
     User.findOne(req.params, function foundUser(err, user) {
-      if (err) { 
+      if (err) {
+          console.log(err);
           return;
       }
       if (!user) return;
