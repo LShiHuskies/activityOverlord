@@ -38,6 +38,10 @@ module.exports = {
           }
           return res.redirect('/user/new')
         }
+        // Log User In
+        req.session.authenticated = true;
+        req.session.User = user;
+
         return res.redirect('/user/show/' + user.id);
        }, { fetch: true })
 
