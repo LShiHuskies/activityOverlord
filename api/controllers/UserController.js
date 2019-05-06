@@ -60,6 +60,9 @@ module.exports = {
 
   index: function (req, res, next) {
     // Get an array of all users in the User collection (e.g table)
+    // console.log(new Date());
+    // console.log(req.session.authenticated);
+
     User.find(function foundUsers (err, users) {
       if (err) return next(err);
       res.view({
